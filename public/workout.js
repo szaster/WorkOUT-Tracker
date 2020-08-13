@@ -10,10 +10,11 @@ async function initWorkout() {
 
     const workoutSummary = {
       date: formatDate(lastWorkout.day),
-      totalDuration: lastWorkout.totalDuration,
       numExercises: lastWorkout.exercises.length,
       ...tallyExercises(lastWorkout.exercises),
     };
+
+    console.log("Workout Summary", workoutSummary);
 
     renderWorkoutSummary(workoutSummary);
   } else {
@@ -22,6 +23,7 @@ async function initWorkout() {
 }
 
 const initialExerciseTally = {
+  totalDuration: 0,
   totalWeight: 0,
   totalSets: 0,
   totalReps: 0,
@@ -29,6 +31,7 @@ const initialExerciseTally = {
 };
 
 function sum(acc, exercise) {
+  acc.totalDuration = acc.totalDuration + exercise.duration;
   if (exercise.type === "resistance") {
     acc.totalWeight = acc.totalWeight + exercise.weight;
     acc.totalSets = acc.totalSets + exercise.sets;
@@ -40,7 +43,9 @@ function sum(acc, exercise) {
 }
 
 function tallyExercises(exercises) {
-  return exercises.reduce(sum, initialExerciseTally);
+  const tally = exercises.reduce(sum, initialExerciseTally);
+  console.log("Exercise tally", tally);
+  return tally;
 }
 
 function formatDate(date) {
