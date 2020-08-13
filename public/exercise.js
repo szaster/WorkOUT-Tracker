@@ -12,7 +12,7 @@ const distanceInput = document.querySelector("#distance");
 const completeButton = document.querySelector("button.complete");
 const addButton = document.querySelector("button.add-another");
 const toast = document.querySelector("#toast");
-const newWorkout = document.querySelector(".new-workout")
+const newWorkout = document.querySelector(".new-workout");
 
 let workoutType = null;
 let shouldNavigateAway = false;
@@ -21,16 +21,13 @@ async function initExercise() {
   let workout;
 
   if (location.search.split("=")[1] === undefined) {
-    workout = await API.createWorkout()
-    console.log(workout)
+    workout = await API.createWorkout();
+    console.log(workout);
   }
   if (workout) {
     location.search = "?id=" + workout._id;
   }
-
 }
-
-initExercise();
 
 function handleWorkoutTypeChange(event) {
   workoutType = event.target.value;
@@ -115,7 +112,9 @@ async function handleFormSubmit(event) {
   }
 
   await API.addExercise(workoutData);
+
   clearInputs();
+
   toast.classList.add("success");
 }
 
@@ -137,6 +136,9 @@ function clearInputs() {
   weightInput.value = "";
 }
 
+// initializes workout if we did not have workout present
+initExercise();
+
 if (workoutTypeSelect) {
   workoutTypeSelect.addEventListener("change", handleWorkoutTypeChange);
 }
@@ -153,4 +155,4 @@ toast.addEventListener("animationend", handleToastAnimationEnd);
 
 document
   .querySelectorAll("input")
-  .forEach(element => element.addEventListener("input", validateInputs));
+  .forEach((element) => element.addEventListener("input", validateInputs));
