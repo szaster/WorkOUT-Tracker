@@ -1,7 +1,9 @@
 async function initWorkout() {
-  const lastWorkout = await API.getLastWorkout();
-  console.log("Last workout:", lastWorkout);
-  if (lastWorkout) {
+  const workouts = await API.getLastWorkout();
+  if (workouts.length > 0) {
+    const lastWorkout = workouts[0];
+
+    // add id of the last workout to the link for continuing workout button
     document
       .querySelector("a[href='/exercise?']")
       .setAttribute("href", `/exercise?id=${lastWorkout._id}`);
@@ -10,27 +12,35 @@ async function initWorkout() {
       date: formatDate(lastWorkout.day),
       totalDuration: lastWorkout.totalDuration,
       numExercises: lastWorkout.exercises.length,
-      ...tallyExercises(lastWorkout.exercises)
+      ...tallyExercises(lastWorkout.exercises),
     };
 
     renderWorkoutSummary(workoutSummary);
   } else {
-    renderNoWorkoutText()
+    renderNoWorkoutText();
   }
 }
 
+const initialExerciseTally = {
+  totalWeight: 0,
+  totalSets: 0,
+  totalReps: 0,
+  totalDistance: 0,
+};
+
+function sum(acc, exercise) {
+  if (exercise.type === "resistance") {
+    acc.totalWeight = acc.totalWeight + exercise.weight;
+    acc.totalSets = acc.totalSets + exercise.sets;
+    acc.totalReps = acc.totalReps + exercise.reps;
+  } else if (exercise.type === "cardio") {
+    acc.totalDistance = acc.totalDistance + exercise.distance;
+  }
+  return acc;
+}
+
 function tallyExercises(exercises) {
-  const tallied = exercises.reduce((acc, curr) => {
-    if (curr.type === "resistance") {
-      acc.totalWeight = (acc.totalWeight || 0) + curr.weight;
-      acc.totalSets = (acc.totalSets || 0) + curr.sets;
-      acc.totalReps = (acc.totalReps || 0) + curr.reps;
-    } else if (curr.type === "cardio") {
-      acc.totalDistance = (acc.totalDistance || 0) + curr.distance;
-    }
-    return acc;
-  }, {});
-  return tallied;
+  return exercises.reduce(sum, initialExerciseTally);
 }
 
 function formatDate(date) {
@@ -38,7 +48,7 @@ function formatDate(date) {
     weekday: "long",
     year: "numeric",
     month: "long",
-    day: "numeric"
+    day: "numeric",
   };
 
   return new Date(date).toLocaleDateString(options);
@@ -54,10 +64,10 @@ function renderWorkoutSummary(summary) {
     totalWeight: "Total Weight Lifted",
     totalSets: "Total Sets Performed",
     totalReps: "Total Reps Performed",
-    totalDistance: "Total Distance Covered"
+    totalDistance: "Total Distance Covered",
   };
 
-  Object.keys(summary).forEach(key => {
+  Object.keys(summary).forEach((key) => {
     const p = document.createElement("p");
     const strong = document.createElement("strong");
 
@@ -75,7 +85,7 @@ function renderNoWorkoutText() {
   const container = document.querySelector(".workout-stats");
   const p = document.createElement("p");
   const strong = document.createElement("strong");
-  strong.textContent = "You have not created a workout yet!"
+  strong.textContent = "You have not created a workout yet!";
 
   p.appendChild(strong);
   container.appendChild(p);
