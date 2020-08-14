@@ -35,4 +35,26 @@ module.exports = (app) => {
       res.status(404).end();
     }
   });
+
+  /**
+   * Return statistics for days of the week ()
+   */
+  app.get("/api/workouts/range", async (req, res) => {
+    try {
+      // const query = {
+      //   $expr: {
+      //     $project: {
+      //       dayOfWeek: { $dayOfWeek: "$day" },
+      //     },
+      //   },
+      // };
+      // this query returns non-aggregated data. Proper call should aggregate by
+      // day of the week.
+      const query = {};
+      const result = await db.Workout.find(query);
+      res.json(result);
+    } catch {
+      res.status(500).end();
+    }
+  });
 };
