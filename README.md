@@ -1,27 +1,52 @@
-# Workout-Tracker
-Application to view, create and track daily workouts.
+# Workout-Tracker.
 
+[Live website on Heroku](https://mongo-workout-app.herokuapp.com/)
+[GitHub repo](https://github.com/szaster/WorkOUT-Tracker)
 
-Nosql Homework: Workout Tracker
+## Description
 
-For this assignment, you'll create a workout tracker. You have already been provided with the front end code in the `Develop` folder. This assignment will require you to create Mongo database with a Mongoose schema and handle routes with Express.
+This application allows a user to view, create and track daily workouts. The user can log multiple exercises in a workout on a given day. The user will reach their fitness goals quicker when they track their workout progress.
+When the user loads the page, they are given the option to create a new workout, or continue with their last workout.
+The user is able to:
 
-## User Story
+- Add exercises to a previous workout plan.
 
-* As a user, I want to be able to view create and track daily workouts. I want to be able to log multiple exercises in a workout on a given day. I should also be able to track the name, type, weight, sets, reps, and duration of exercise. If the exercise is a cardio exercise, I should be able to track my distance traveled.
+- Add new exercises to a new workout plan.
 
-## Business Context
+The application uses Mongo database with a Mongoose schema and handles routes with Express.
+![](src)
 
-A consumer will reach their fitness goals quicker when they track their workout progress.
+## Table of contents
 
-## Acceptance Criteria
+[Installation](#installation)
 
-When the user loads the page, they should be given the option to create a new workout, or continue with their last workout.
+[Tech](#techStack)
 
-The user should be able to:
+[License](#license)
 
-  * Add exercises to a previous workout plan.
+[Questions](#questions)
 
-  * Add new exercises to a new workout plan.
+## Installation and usage
 
-  * View multiple the combined weight of multiple exercises on the `stats` page.
+No installation. Just open the [Live website on Heroku](https://mongo-workout-app.herokuapp.com/).
+In order to look at/play with the underlying code, clone the code on your machine, install and import dependencies with `npm install`. Run the application with a command `node server.js` in a terminal. MongoDB needs to be installed on your machine as well.
+
+## Tech Stack
+
+[Mongoose](https://www.npmjs.com/package/mongoose) framework used in a Node.js with a [MongoDB](https://www.mongodb.com/) database for modeling objects.
+
+Express web framework for node [Express](https://www.npmjs.com/package/express) to provide small, robust tooling for HTTP servers, making it a great solution for single page applications, web sites, hybrids, or public HTTP APIs.
+
+Extension for VS code [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) to autoformat the code when saving.
+
+Instructor and TAs for the help with deployment to Heroku.
+
+## License
+
+MIT license.
+
+## Questions
+
+If you any additional questions you can reach me via my [Github user profile](https://www.github.com/szaster) or [write me directly](mailto:szaster@protonmail.com).
+
+You also can [file an issue](https://github.com/szaster/WorkOUT-Tracker/issues) if you find a bug.
