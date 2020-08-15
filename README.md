@@ -14,7 +14,6 @@ The user is able to:
 - Add new exercises to a new workout plan.
 
 The application uses Mongo database with a Mongoose schema and handles routes with Express.
-![](src)
 
 ## Table of contents
 
